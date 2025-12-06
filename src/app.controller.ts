@@ -1,0 +1,24 @@
+import { Controller, Get, Post,Put } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
+  }
+
+  @Post('post-example')
+  getPost() {
+    return this.appService.getPostExample();
+  }
+
+
+  @Put('put-example')
+  getPut(){
+    return 'put example';
+  }
+}
+
