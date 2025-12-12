@@ -8,9 +8,9 @@ import { IdValidationPipe } from 'src/common/pipes/id-validation/id-validation.p
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
-  @Post()
+  @Post()        // el DTO hace las validaciones antes de entrar al metodo
   create(@Body() createCategoryDto: CreateCategoryDto) {
-    console.log(process.env.DATABASE_USER);
+   // console.log(createCategoryDto);
     return this.categoriesService.create(createCategoryDto);
   }
 
@@ -21,6 +21,7 @@ export class CategoriesController {
   
   @Get(':id' )
   findOne(@Param('id', IdValidationPipe) id: string) {
+    
     return this.categoriesService.findOne(+id);
   }
 

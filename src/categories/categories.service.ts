@@ -12,14 +12,14 @@ export class CategoriesService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  create(createCategoryDto: CreateCategoryDto) {
+  async create(createCategoryDto: CreateCategoryDto) {
     const category = new Category();
     category.name = createCategoryDto.name;
-    return this.categoryRepository.save(category);
+    return await this.categoryRepository.save(category);
   }
 
-  findAll() {
-    const categories = this.categoryRepository.find();
+  async findAll() {
+    const categories = await this.categoryRepository.find();
     return categories;
   }
 
@@ -33,6 +33,7 @@ export class CategoriesService {
 
   async update(id: number, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.findOne(id);
+    
 
     if (updateCategoryDto.name !== undefined) {
       category.name = updateCategoryDto.name;
