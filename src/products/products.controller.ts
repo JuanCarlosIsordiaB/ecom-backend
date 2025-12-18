@@ -37,20 +37,21 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    console.log('Fetching product with ID:', id);
-    return this.productsService.findOne(id);
+  findOne(@Param() params: GetOneProductDto) {
+    console.log('Fetching product with ID:', params.id);
+    return this.productsService.findOne(params.id);
   }
 
   @Patch(':id')
-  update(
-    @Param('id', new ParseUUIDPipe()) id: string, 
-    @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(id, updateProductDto);
-  }
+update(
+  @Param() params: GetOneProductDto, 
+  @Body() updateProductDto: UpdateProductDto) {
+    console.log('Updating product with ID:', params.id);
+  return this.productsService.update(params.id, updateProductDto);
+}
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.remove(id);
+  remove(@Param() params: GetOneProductDto) {
+    return this.productsService.remove(params.id);
   }
 }
