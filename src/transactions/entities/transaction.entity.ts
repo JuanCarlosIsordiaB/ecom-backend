@@ -18,15 +18,19 @@ export class Transaction {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   transactionDate: Date;
 
-  @OneToMany(() => TransactionContent, (transaction) => transaction.transaction, {
-    cascade: true,
-    eager: true,
-  })
-  contents: TransactionContent[];
+  @OneToMany(
+    () => TransactionContents,
+    (transaction) => transaction.transaction,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  contents: TransactionContents[];
 }
 
 @Entity()
-export class TransactionContent {
+export class TransactionContents {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -36,7 +40,10 @@ export class TransactionContent {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-  @ManyToOne(() => Product, (product) => product.id, { eager: true })
+  @ManyToOne(() => Product, (product) => product.id, {
+    eager: true,
+    cascade: true,
+  })
   product: Product;
 
   @ManyToOne(() => Transaction, (transaction) => transaction.contents, {
