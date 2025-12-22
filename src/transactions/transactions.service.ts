@@ -13,6 +13,8 @@ import {
 import { Between, FindManyOptions, Repository } from 'typeorm';
 import { Product } from 'src/products/entities/product.entity';
 import { isValid, parseISO, startOfDay, endOfDay } from 'date-fns';
+import { CouponsService } from 'src/coupons/coupons.service';
+
 
 @Injectable()
 export class TransactionsService {
@@ -23,19 +25,29 @@ export class TransactionsService {
     private readonly transactionContentsRepository: Repository<TransactionContents>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    private readonly couponsService: CouponsService,
   ) {}
 
   async create(createTransactionDto: CreateTransactionDto) {
     await this.productRepository.manager.transaction(
       async (transactionEntityManager) => {
-        const calculatedTotal = createTransactionDto.contents.reduce(
+        const total = createTransactionDto.contents.reduce(
           (sum, item) => sum + item.price * item.quantity,
           0,
         );
+        
 
         // Guardar la transacción principal primero
         const transaction = new Transaction();
-        transaction.total = calculatedTotal;
+        transaction.total = total;
+
+        if(createTransactionDto.coupon){
+          const coupon = await this.couponsService.validateCoupon(createTransactionDto.coupon);
+          const discountAmount = (total * coupon.percentage) / 100;
+          transaction.discount = discountAmount;
+          transaction.coupon = coupon.name;
+          transaction.total = total - discountAmount;
+        }
         await transactionEntityManager.save(transaction);
 
         for (const contents of createTransactionDto.contents) {

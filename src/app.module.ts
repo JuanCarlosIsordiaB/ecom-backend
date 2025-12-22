@@ -5,12 +5,13 @@ import { CategoriesModule } from './categories/categories.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ProductsModule } from './products/products.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { CouponsModule } from './coupons/coupons.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), TypeOrmModule.forRootAsync({
     useFactory: typeOrmConfig,
     inject: [ConfigService],
-  }), CategoriesModule, ProductsModule, TransactionsModule],
+  }), CategoriesModule, ProductsModule, TransactionsModule, CouponsModule],
   controllers: [],
   providers: [],
 })

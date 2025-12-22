@@ -15,6 +15,12 @@ export class Transaction {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   total: number;
 
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  coupon: string;
+
+  @Column({ type: 'decimal', nullable: true, default: 0 })
+  discount: number;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   transactionDate: Date;
 
