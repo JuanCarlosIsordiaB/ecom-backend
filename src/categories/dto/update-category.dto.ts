@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateCategoryDto } from './create-category.dto';
 import { IsOptional, IsString, IsNotEmpty, Validate } from 'class-validator';
-import { AtLeastOneFieldConstraint } from 'src/common/decorators/at-least-one-field.decorator';
+import { AtLeastOneFieldConstraint } from '../../common/decorators/at-least-one-field.decorator';
 
 export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
   @Validate(AtLeastOneFieldConstraint, ['name'], {

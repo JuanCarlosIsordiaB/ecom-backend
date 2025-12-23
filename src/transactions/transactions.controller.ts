@@ -11,7 +11,7 @@ import {
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { GetOneProductDto } from 'src/products/dto/get-product.dto';
+import { GetOneProductDto } from '../products/dto/get-product.dto';
 
 @Controller('transactions')
 export class TransactionsController {
