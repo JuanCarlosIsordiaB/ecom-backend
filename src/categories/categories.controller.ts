@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, NotFoundException, BadRequestException, ParseBoolPipe, Query } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -20,10 +20,14 @@ export class CategoriesController {
   }
   
   @Get(':id' )
-  findOne(@Param('id', IdValidationPipe) id: string) {
+  findOne(
+    @Param('id', IdValidationPipe) id: string,
+    @Query('products', ParseBoolPipe) products?: boolean
+  ) {
     
-    return this.categoriesService.findOne(+id);
+    return this.categoriesService.findOne(+id, products);
   }
+
 
   @Patch(':id')
   update(@Param('id', IdValidationPipe) id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
