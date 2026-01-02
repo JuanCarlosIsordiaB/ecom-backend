@@ -9,6 +9,7 @@ import {
   IsString,
   Length,
   ValidateNested,
+  ValidateIf,
 } from 'class-validator';
 
 export class TransactionContentsDto {
@@ -32,8 +33,9 @@ export class CreateTransactionDto {
 
   @IsOptional()
   @IsString({ message: 'El cupón debe ser una cadena de texto' })
+  @ValidateIf((o) => o.coupon && o.coupon.length > 0)
   @Length(1, 100, { message: 'El cupón debe tener entre 1 y 100 caracteres' })
-  coupon: string;
+  coupon?: string;
 
   @IsArray()
   @ArrayNotEmpty({ message: 'Los Contenidos no pueden ir vacios' })

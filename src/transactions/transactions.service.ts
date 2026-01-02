@@ -89,7 +89,9 @@ export class TransactionsService {
       },
     );
 
-    return 'Transaction created successfully';
+    return {
+      message: 'Transaction created successfully',
+    };
   }
 
   findAll(transactionDate?: string) {
