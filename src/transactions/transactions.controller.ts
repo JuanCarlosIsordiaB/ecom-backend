@@ -24,7 +24,7 @@ export class TransactionsController {
 
   @Get()
   findAll(@Query('transactionDate') transactionDate?: string) {
-    console.log('transactionDate query param:', transactionDate);
+    //console.log('transactionDate query param:', transactionDate);
     return this.transactionsService.findAll(transactionDate);
   }
 
